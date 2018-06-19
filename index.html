@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Pauzebel Ellage</title>
+	<link rel="stylesheet" href="css/style.css">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+	<div class="container">
+		<div class="header">
+			<h1>Pauzebel Ellage</h1>
+		</div>
+		<div class="table">
+			<div class="col" id="timeInputDiv">
+				<h3>Voeg een tijd toe</h3>
+				<p><em>Stel in voor 1 dag of meerdere dagen</em></p>
+				<form action="" name="timeForm">
+					<input type="time" name="time" id="timeToSet"><br>
+				  	<input class="inputTime" type="checkbox" name="times" id="mondayInput" value="monday"> Maandag<br>
+				  	<input class="inputTime" type="checkbox" name="times" id="tuesdayInput" value="tuesday"> Dinsdag<br>
+				  	<input class="inputTime" type="checkbox" name="times" id="wednesdayInput" value="wednesday"> Woensdag<br>
+					<input class="inputTime" type="checkbox" name="times" id="thursdayInput" value="thursday"> Donderdag<br>
+					<input class="inputTime" type="checkbox" name="times" id="fridayInput" value="friday"> Vrijdag<br>
+					<input class="inputTime" type="checkbox" name="times" id="saturdayInput" value="saturday"> Zaterdag<br>
+					<input class="inputTime" type="checkbox" name="times" id="sundayInput" value="sunday"> Zondag<br><br>
+					
+					<a id="checkTrue"  href="javascript:void(0);">Check alles</a><br>
+					<a id="checkFalse" href="javascript:void(0);">Uncheck alles</a>
+					<br>
+
+				  	<button class="inputTime save btn btn-info" type="button" id="save">Opslaan</button>
+				</form>
+			</div>
+		
+			<div class="col">
+				<h3>Ingestelde Dagen</h3>
+				<p><em>Klik op een tijd om te verwijderen</em></p>
+				<div class="timeTable" id="monday">
+					<h5>Maandag</h5>
+				</div>
+				<hr>
+				<div class="timeTable" id="tuesday">
+					<h5>Dinsdag</h5>
+				</div>
+				<hr>
+				<div class="timeTable" id="wednesday">
+					<h5>Woensdag</h5>
+				</div>
+				<hr>
+				<div class="timeTable" id="thursday">
+					<h5>Donderdag</h5>
+				</div>
+				<hr>
+				<div class="timeTable" id="friday">
+					<h5>Vrijdag</h5>
+				</div>
+				<hr>
+				<div class="timeTable" id="saturday">
+					<h5>Zaterdag</h5>
+				</div>
+				<hr>
+				<div class="timeTable" id="sunday">
+					<h5>Zondag</h5>
+				</div>
+				<hr>
+			</div>
+	</div>
+<script src="js/script.js"></script>
+</body>
+</html>

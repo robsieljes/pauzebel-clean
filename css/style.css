@@ -1,0 +1,131 @@
+html{
+	font-family: "Trebuchet MS", Helvetica, sans-serif;
+}
+
+button.time{
+	padding:5px 35px 5px 35px;
+	margin-right: 10px;
+	margin-bottom: 10px;
+	font-size: 1.1em;
+	background-color: #17A2B8;
+	color: white;
+	border-radius: 5px;
+	border: 0px;
+}
+
+button:hover{
+	background-color: #1E8495;
+	cursor: pointer;
+	/*padding-right: 35px;*/
+}
+
+button.save{
+	padding:5px 25px 5px 25px;
+	margin-right: 10px;
+	margin-bottom: 10px;
+	font-size: 1.1em;
+	background-color: #17A2B8;
+	color: white;
+	border-radius: 5px;
+	border: 0px;
+}
+
+button:hover{
+	background-color: #1E8495;
+	cursor: pointer;
+}
+.container{
+	width: 60%;
+	margin: 0 auto;
+	background-color: #F8F9FA;
+}
+
+.header{
+	background-color: black;
+	color: white;
+	padding: 20px;
+	text-align: center;
+	margin-bottom: 20px;
+	height: 100%;
+}
+/* Trash icon */
+.icon{
+	display: inline-block;
+}
+.trash-solid.icon {
+	color: #FF3232;
+	position: absolute;
+	margin-left: 10px;
+	margin-top: 7px;
+	width: 9px;
+	height: 10px;
+	border-left: solid 1px currentColor;
+	border-right: solid 1px currentColor;
+	border-bottom: solid 1px currentColor;
+	border-radius: 0 0 2px 2px;
+	background-color: currentColor;
+}
+.trash-solid.icon:before {
+	content: '';
+	position: absolute;
+	left: -4px;
+	top: -2px;
+	width: 17px;
+	height: 1px;
+	background-color: currentColor;
+}
+.trash-solid.icon:after {
+	content: '';
+	position: absolute;
+	left: 0px;
+	top: -5px;
+	width: 7px;
+	height: 2px;
+	border-left: solid 1px currentColor;
+	border-right: solid 1px currentColor;
+	border-top: solid 1px currentColor;
+	background-color: currentColor;
+	border-radius: 4px 4px 0 0;
+}
+
+li{
+	list-style-type: none;
+}
+h3{
+	font-size: 30px;
+}
+
+h5{
+	margin-bottom: 15px;
+	font-size: 20px;
+	font-weight: lighter;
+}
+
+.table{
+	display: table;
+	width: 100%;
+}
+.col{
+	display: table-cell;
+	width: 50%;
+	padding: 2%;
+	vertical-align: top;
+}
+
+
+.inputTime{
+	margin-top: 20px;
+}
+
+
+
+@media screen and (max-width:50em) {
+	.col{
+		display: block;
+		width: 96%;
+		padding: 2%;
+	}
+	.container{
+		width: 100%;
+	}
+}
