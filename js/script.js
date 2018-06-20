@@ -1,5 +1,8 @@
 window.onload = function(){
-	// Load JSON file from server
+	// Global variables
+	var days = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
+
+	// Load JSON file from server, later file will be loaded to parse all data
 	function loadJSON(callback) {   
 		var xobj = new XMLHttpRequest();
 	    xobj.overrideMimeType("application/json");
@@ -8,14 +11,13 @@ window.onload = function(){
 	      if (xobj.readyState == 4 && xobj.status == "200") {
 	     	callback(xobj.responseText);
 	      }
-	};
+		};
 	xobj.send(null);  
 	}
 
 	// Function to click on save and check if time and days are not empty
 	document.getElementById("save").onclick = function(){
 		var timeToSet = document.getElementById("timeToSet").value;
-		var days = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"];
 		var daysFilled = false;
 		for(i = 0; i < 7; i++){
 			if(document.getElementById(days[i] + "Input").checked){
@@ -35,7 +37,6 @@ window.onload = function(){
 				}
 			}
 		}
-		//location.reload();
 	}
 
 	// Check all + uncheck all function
@@ -51,11 +52,6 @@ window.onload = function(){
 	      checkboxes[i].checked = checktoggle;
 	    }
 	  }
-	}
-
-	// Create unique ID for key 
-	function myUniqueID(){
-  		return Math.random().toString(36).slice(2);
 	}
 
 	// Function to write data to database
@@ -77,46 +73,43 @@ window.onload = function(){
 	}
 
 	// Function to append days to HTML from local JSON file
-	function getDays(){
-		loadJSON(function(response) {
+	loadJSON(function(response) {
 		// Parse JSON string into object
-			var times_days = JSON.parse(response);
-			var totalArray = [];
-			var j = 0;
-			var days = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
-			for (var i = 0; i < 7; i++) {
-				if(times_days[days[i]] == ""){
-					continue;
-				}
-				else{
-					times_days[days[i]].forEach(function(time){
-						var div = document.createElement("BUTTON");
-						var content = document.createTextNode(time);
-						var timeElem = time;
-						var list = document.createElement("DIV");
-						var day = days[i];
-						//div.setAttribute("id", days[i]);
-						div.setAttribute("type", "button")
-						div.setAttribute("class", "time");
-						div.appendChild(content);
-						div.appendChild(list);
-						div.addEventListener("click", deleteTime);
-						div.addEventListener("mouseover", addClass);
-						div.addEventListener("mouseout", delClass);
-						totalArray[j] = [day, timeElem, div];
-						j++;
-					});
-				}
-				
-			};
-			totalArray = totalArray.sort();
-			for(var i = 0; i < totalArray.length; i++){
-				var divAppendTo = totalArray[i][0];
-				document.getElementById(divAppendTo).appendChild(totalArray[i][2])
+		var times_days = JSON.parse(response);
+		var totalArray = [];
+		var j = 0;
+		for (var i = 0; i < 7; i++) {
+			if(times_days[days[i]] == ""){
+				continue;
 			}
-		});
-	}
-	getDays();
+			else{
+				times_days[days[i]].forEach(function(time){
+					var div = document.createElement("BUTTON");
+					var content = document.createTextNode(time);
+					var timeElem = time;
+					var list = document.createElement("DIV");
+					var day = days[i];
+					//div.setAttribute("id", days[i]);
+					div.setAttribute("type", "button")
+					div.setAttribute("class", "time");
+					div.appendChild(content);
+					div.appendChild(list);
+					div.addEventListener("click", deleteTime);
+					div.addEventListener("mouseover", addClassTrashcan);
+					div.addEventListener("mouseout", delClassTrashcan);
+					totalArray[j] = [day, timeElem, div];
+					j++;
+				});
+			}
+			
+		};
+		// totalArray is array with all elements, down here it is sorted on time
+		totalArray = totalArray.sort();
+		for(var i = 0; i < totalArray.length; i++){
+			var divAppendTo = totalArray[i][0];
+			document.getElementById(divAppendTo).appendChild(totalArray[i][2])
+		}
+	});
 	
 	// Delete time from database and from HTML for realtime
 	function deleteTime(){
@@ -132,19 +125,19 @@ window.onload = function(){
 	}
 
 	// Make trashcan visible with class
-	function addClass(){
+	function addClassTrashcan(){
 		var child = this.childNodes[1];
 		child.className = " trash-solid icon";
 	}
 
 	// Make trashcan invisible with class
-	function delClass(){
+	function delClassTrashcan(){
 		var child = this.childNodes[1];
 		child.classList.remove("trash-solid");
 		child.classList.remove("icon");
 	}
 
-	// Make input for SSID and password visible
+	// Make input for SSID and password visible when clicking on wifi settings
 	document.getElementById("wifi").onclick = function(){
 	    var x = document.getElementById("wifisettings");
 	    console.log(x.style.display);
@@ -156,7 +149,7 @@ window.onload = function(){
 	    }
 	}
 
-	// Action to save WiFi settings
+	// Action to save WiFi settings to server
 	document.getElementById("savewifi").onclick = function(){
 		var x = document.getElementById("wifisettings");
 		var ssid = document.getElementById("ssid").value;
