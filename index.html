@@ -9,7 +9,30 @@
 <body>
 	<div class="container">
 		<div class="header">
-			<h1>Pauzebel Ellage</h1>
+			<table class="headertable">
+				<tr>
+					<th class="twenty"></th>
+					<th class="eighty"><h1>Pauzebel Ellage</h1></th>
+					<th class="twenty">
+					<button class="save" id="wifi">WiFi Instellen</button>
+					<table id="wifisettings">
+						<tr>
+							<td class="left">SSID</td><br>
+							<td class="right"><input type="text" value="ssid" id="ssid"></td>
+							
+						</tr>
+						<tr>
+							<td class="left">Wachtwoord</td><br>
+							<td class="right"><input type="text" value="password" id="password"></td>
+							
+						</tr>
+						<tr class="center">
+							<td><br><button class="save" type="button" id="savewifi">Opslaan</button></td>
+						</tr>
+					</table>
+					</th>
+				</tr>
+			</table>
 		</div>
 		<div class="table">
 			<div class="col" id="timeInputDiv">

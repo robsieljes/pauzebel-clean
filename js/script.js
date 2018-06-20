@@ -60,18 +60,20 @@ window.onload = function(){
 
 	// Function to write data to database
 	function writeDay(day, time, addremove){
-		//console.log(day, time, addremove);
+		console.log(day, time, addremove);
 		var xhr = new XMLHttpRequest();
-		var url = "index.html";
+		var url = "/input";
 		xhr.open("POST", url, true);
-		xhr.setRequestHeader("Content-Type", "application/json");
+		xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 		xhr.onreadystatechange = function () {
 		    if (xhr.readyState === 4 && xhr.status === 200) {
 		    	//console.log(xhr.responseText);
 		        //var json = JSON.parse(xhr.responseText);
 		    }
 		};
-		xhr.send(day, time, addremove);
+		var postString = "day=" + day + "&time=" + time + "&addRem=" + addremove;
+		xhr.send(postString);
+		console.log(postString);
 	}
 
 	// Function to append days to HTML from local JSON file
@@ -83,23 +85,28 @@ window.onload = function(){
 			var j = 0;
 			var days = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
 			for (var i = 0; i < 7; i++) {
-				times_days[days[i]].forEach(function(time){
-					var div = document.createElement("BUTTON");
-					var content = document.createTextNode(time);
-					var timeElem = time;
-					var list = document.createElement("DIV");
-					var day = days[i];
-					//div.setAttribute("id", days[i]);
-					div.setAttribute("type", "button")
-					div.setAttribute("class", "time");
-					div.appendChild(content);
-					div.appendChild(list);
-					div.addEventListener("click", deleteTime);
-					div.addEventListener("mouseover", addClass);
-					div.addEventListener("mouseout", delClass);
-					totalArray[j] = [day, timeElem, div];
-					j++;
-				});
+				if(times_days[days[i]] == ""){
+					continue;
+				}
+				else{
+					times_days[days[i]].forEach(function(time){
+						var div = document.createElement("BUTTON");
+						var content = document.createTextNode(time);
+						var timeElem = time;
+						var list = document.createElement("DIV");
+						var day = days[i];
+						//div.setAttribute("id", days[i]);
+						div.setAttribute("type", "button")
+						div.setAttribute("class", "time");
+						div.appendChild(content);
+						div.appendChild(list);
+						div.addEventListener("click", deleteTime);
+						div.addEventListener("mouseover", addClass);
+						div.addEventListener("mouseout", delClass);
+						totalArray[j] = [day, timeElem, div];
+						j++;
+					});
+				}
 				
 			};
 			totalArray = totalArray.sort();
@@ -136,5 +143,27 @@ window.onload = function(){
 		child.classList.remove("trash-solid");
 		child.classList.remove("icon");
 	}
+
+	// Make input for SSID and password visible
+	document.getElementById("wifi").onclick = function(){
+	    var x = document.getElementById("wifisettings");
+	    console.log(x.style.display);
+		if (x.style.display === "none" || x.style.display === "") {
+	    	x.style.display = "block";
+	    }
+	    else {
+	        x.style.display = "none";
+	    }
+	}
+
+	// Action to save WiFi settings
+	document.getElementById("savewifi").onclick = function(){
+		var x = document.getElementById("wifisettings");
+		var ssid = document.getElementById("ssid").value;
+		var password = document.getElementById("password").value;
+		alert(ssid + password);
+		x.style.display = "none";
+	}
+   
 }
 

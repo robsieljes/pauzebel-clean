@@ -1,9 +1,60 @@
 html{
 	font-family: "Trebuchet MS", Helvetica, sans-serif;
 }
+.header{
+	background-color: black;
+	color: white;
+	text-align: center;
+	margin-bottom: 20px;
+	height: 100px;
+}
+
+.headertable{
+	width: 100%;
+}
+
+.eighty{
+	width: 60%;
+}
+
+.twenty{
+	width: 19%;
+	padding-top: 22px;
+
+}
+
+.center{
+	text-align: center;
+}
+
+td.left{
+	text-align: left;
+	width: 20px;
+}
+
+td.right{
+}
+
+#wifisettings{
+	transition: opacity 1s ease-out;
+	display: none;
+	position: absolute;
+	color: white;
+	background-color: black;
+	top: 100px;
+	width: 300px;
+	right: 20%;
+	padding: 10px;
+}
+
+#wifisettings tr td input{
+	width: 150px;
+}
 
 button.time{
-	padding:5px 35px 5px 35px;
+	width: 100px;
+	padding-top: 5px;
+	padding-bottom: 5px;
 	margin-right: 10px;
 	margin-bottom: 10px;
 	font-size: 1.1em;
@@ -16,7 +67,6 @@ button.time{
 button:hover{
 	background-color: #1E8495;
 	cursor: pointer;
-	/*padding-right: 35px;*/
 }
 
 button.save{
@@ -38,16 +88,13 @@ button:hover{
 	width: 60%;
 	margin: 0 auto;
 	background-color: #F8F9FA;
+
+}
+body{
+	margin: 0px;
 }
 
-.header{
-	background-color: black;
-	color: white;
-	padding: 20px;
-	text-align: center;
-	margin-bottom: 20px;
-	height: 100%;
-}
+
 /* Trash icon */
 .icon{
 	display: inline-block;
@@ -112,12 +159,9 @@ h5{
 	vertical-align: top;
 }
 
-
 .inputTime{
 	margin-top: 20px;
 }
-
-
 
 @media screen and (max-width:50em) {
 	.col{
@@ -127,5 +171,9 @@ h5{
 	}
 	.container{
 		width: 100%;
+	}
+	#wifisettings{
+
+		right: 0%;
 	}
 }
