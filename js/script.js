@@ -36,6 +36,7 @@ window.onload = function(){
 					writeDay(days[i], timeToSet, true);
 				}
 			}
+			location.reload();
 		}
 	}
 
