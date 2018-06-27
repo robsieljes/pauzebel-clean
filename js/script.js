@@ -57,20 +57,17 @@ window.onload = function(){
 
 	// Function to write data to database
 	function writeDay(day, time, addremove){
-		console.log(day, time, addremove);
 		var xhr = new XMLHttpRequest();
 		var url = "/input";
 		xhr.open("POST", url, true);
 		xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 		xhr.onreadystatechange = function () {
 		    if (xhr.readyState === 4 && xhr.status === 200) {
-		    	//console.log(xhr.responseText);
 		        //var json = JSON.parse(xhr.responseText);
 		    }
 		};
 		var postString = "day=" + day + "&time=" + time + "&addRem=" + addremove;
 		xhr.send(postString);
-		console.log(postString);
 	}
 
 	// Function to append days to HTML from local JSON file
@@ -90,7 +87,6 @@ window.onload = function(){
 					var timeElem = time;
 					var list = document.createElement("DIV");
 					var day = days[i];
-					//div.setAttribute("id", days[i]);
 					div.setAttribute("type", "button")
 					div.setAttribute("class", "time");
 					div.appendChild(content);
@@ -156,8 +152,18 @@ window.onload = function(){
 		var x = document.getElementById("wifisettings");
 		var ssid = document.getElementById("ssid").value;
 		var password = document.getElementById("password").value;
-		alert(ssid + password);
 		x.style.display = "none";
+		var xhr = new XMLHttpRequest();
+		var url = "/input";
+		xhr.open("POST", url, true);
+		xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+		xhr.onreadystatechange = function () {
+		    if (xhr.readyState === 4 && xhr.status === 200) {
+		        //var json = JSON.parse(xhr.responseText);
+		    }
+		};
+		var postString = "ssid=" + ssid + "&pass=" + password;
+		xhr.send(postString);
 	}
    
 }
