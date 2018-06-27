@@ -119,6 +119,7 @@ window.onload = function(){
 		if(confirm("Weet je zeker dat je de tijd wil verwijderen?")){
 			writeDay(day, time, false);
 			this.style.display = "none";
+			location.reload();
 		}
 		else{
 			alert("Tijd niet verwijderd")
