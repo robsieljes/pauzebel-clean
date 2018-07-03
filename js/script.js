@@ -19,7 +19,7 @@ window.onload = function(){
 	function loadJSONSounds(callback) {   
 		var xobj = new XMLHttpRequest();
 	    xobj.overrideMimeType("application/json");
-		xobj.open('GET', 'sounds.json', true);
+		xobj.open('GET', 'sounds.json', false);
 		xobj.onreadystatechange = function () {
 	      if (xobj.readyState == 4 && xobj.status == "200") {
 	     	callback(xobj.responseText);
@@ -170,24 +170,17 @@ window.onload = function(){
 		var url = "/input";
 		xhr.open("POST", url, true);
 		xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-		xhr.onreadystatechange = function () {
-		    if (xhr.readyState === 4 && xhr.status === 200) {
-		        //var json = JSON.parse(xhr.responseText);
-		    }
-		};
 		var postString = "ssid=" + ssid + "&pass=" + password;
 		xhr.send(postString);
 	}
 
 	// Get sounds from server
 	loadJSONSounds(function(response) {
-		// Parse JSON string into object
 		var sounds = JSON.parse(response);
-		console.log(sounds["sounds"]);
 		var select = document.getElementById("sounds");
 		for(var i = 0; i < sounds["sounds"].length; i++){
 			var el = document.createElement("option");
-			el.textContent = i + 1;//sounds["sounds"][i];
+			el.textContent = i + 1;
 			el.value = sounds["sounds"][i];
 			select.appendChild(el);
 		}
@@ -200,14 +193,40 @@ window.onload = function(){
 		var url = "/input";
 		xhr.open("POST", url, true);
 		xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-		xhr.onreadystatechange = function () {
-		    if (xhr.readyState === 4 && xhr.status === 200) {
-		        //var json = JSON.parse(xhr.responseText);
-		    }
-		};
 		var postString = "sound=" + sound;
 		xhr.send(postString);
 	}
+
+	// Upload sound to server
+	document.getElementById("uploadSound").onclick = function(){
+		var soundUpload = document.getElementById("soundToUpload").files[0];
+		var allowToUpload = false;
+		console.log(soundUpload.size)
+		loadJSONSounds(function(response) {
+			var soundsOnServer = JSON.parse(response);
+			for(var i = 0; i < soundsOnServer["sounds"].length; i++){
+				// Check if name already exists
+				if(soundUpload.name == soundsOnServer["sounds"][i]){
+					alert("Bestandsnaam bestaat al");
+					allowToUpload = true;
+					break;
+				}
+				// Check size of upload in bytes
+				else if(soundUpload.size >= 50000000){
+					alert("Bestand is te groot");
+					allowToUpload = true;
+					break;
+				}
+			}
+		});
+		if(!allowToUpload){
+			alert('File is allowed to upload');
+			var xhr = new XMLHttpRequest();
+			xhr.open("POST", "/upload", true);
+			xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+			xhr.send("soundFile=" + soundUpload);
+		}
+	}	
    
 }
 
