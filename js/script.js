@@ -187,7 +187,7 @@ window.onload = function(){
 		var select = document.getElementById("sounds");
 		for(var i = 0; i < sounds["sounds"].length; i++){
 			var el = document.createElement("option");
-			el.textContent = sounds["sounds"][i];
+			el.textContent = i + 1;//sounds["sounds"][i];
 			el.value = sounds["sounds"][i];
 			select.appendChild(el);
 		}
