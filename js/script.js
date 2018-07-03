@@ -2,11 +2,24 @@ window.onload = function(){
 	// Global variables
 	var days = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
 
-	// Load JSON file from server, later file will be loaded to parse all data
+	// Load times JSON file from server, later file will be loaded to parse all data
 	function loadJSON(callback) {   
 		var xobj = new XMLHttpRequest();
 	    xobj.overrideMimeType("application/json");
 		xobj.open('GET', 'alarmTimes.json', true);
+		xobj.onreadystatechange = function () {
+	      if (xobj.readyState == 4 && xobj.status == "200") {
+	     	callback(xobj.responseText);
+	      }
+		};
+	xobj.send(null);  
+	}
+
+	// Load sounds JSON file from server, later file will be loaded to parse all data
+	function loadJSONSounds(callback) {   
+		var xobj = new XMLHttpRequest();
+	    xobj.overrideMimeType("application/json");
+		xobj.open('GET', 'sounds.json', true);
 		xobj.onreadystatechange = function () {
 	      if (xobj.readyState == 4 && xobj.status == "200") {
 	     	callback(xobj.responseText);
@@ -163,6 +176,36 @@ window.onload = function(){
 		    }
 		};
 		var postString = "ssid=" + ssid + "&pass=" + password;
+		xhr.send(postString);
+	}
+
+	// Get sounds from server
+	loadJSONSounds(function(response) {
+		// Parse JSON string into object
+		var sounds = JSON.parse(response);
+		console.log(sounds["sounds"]);
+		var select = document.getElementById("sounds");
+		for(var i = 0; i < sounds["sounds"].length; i++){
+			var el = document.createElement("option");
+			el.textContent = sounds["sounds"][i];
+			el.value = sounds["sounds"][i];
+			select.appendChild(el);
+		}
+	});
+
+	// Save selected sound
+	document.getElementById("saveSound").onclick = function(){
+		var sound = document.getElementById("sounds").value;
+		var xhr = new XMLHttpRequest();
+		var url = "/input";
+		xhr.open("POST", url, true);
+		xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+		xhr.onreadystatechange = function () {
+		    if (xhr.readyState === 4 && xhr.status === 200) {
+		        //var json = JSON.parse(xhr.responseText);
+		    }
+		};
+		var postString = "sound=" + sound;
 		xhr.send(postString);
 	}
    
