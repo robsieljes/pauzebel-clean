@@ -205,14 +205,14 @@ window.onload = function(){
 		loadJSONSounds(function(response) {
 			var soundsOnServer = JSON.parse(response);
 			for(var i = 0; i < soundsOnServer["sounds"].length; i++){
-				// Check if name already exists
+				// Check if name/file already exists
 				if(soundUpload.name == soundsOnServer["sounds"][i]){
 					alert("Bestandsnaam bestaat al");
 					allowToUpload = true;
 					break;
 				}
 				// Check size of upload in bytes
-				else if(soundUpload.size >= 50000000){
+				else if(soundUpload.size >= 10000000){
 					alert("Bestand is te groot");
 					allowToUpload = true;
 					break;
