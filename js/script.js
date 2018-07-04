@@ -2,24 +2,11 @@ window.onload = function(){
 	// Global variables
 	var days = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
 
-	// Load times JSON file from server, later file will be loaded to parse all data
-	function loadJSON(callback) {   
+	// Load JSON files (alartimes.json and sounds.json) from server, later file will be loaded to parse all data
+	function loadJSON(url, callback) {   
 		var xobj = new XMLHttpRequest();
 	    xobj.overrideMimeType("application/json");
-		xobj.open('GET', 'alarmTimes.json', true);
-		xobj.onreadystatechange = function () {
-	      if (xobj.readyState == 4 && xobj.status == "200") {
-	     	callback(xobj.responseText);
-	      }
-		};
-	xobj.send(null);  
-	}
-
-	// Load sounds JSON file from server, later file will be loaded to parse all data
-	function loadJSONSounds(callback) {   
-		var xobj = new XMLHttpRequest();
-	    xobj.overrideMimeType("application/json");
-		xobj.open('GET', 'sounds.json', false);
+		xobj.open('GET', url, false);
 		xobj.onreadystatechange = function () {
 	      if (xobj.readyState == 4 && xobj.status == "200") {
 	     	callback(xobj.responseText);
@@ -71,21 +58,13 @@ window.onload = function(){
 	// Function to write data to database
 	function writeDay(day, time, addremove){
 		var xhr = new XMLHttpRequest();
-		var url = "/input";
-		xhr.open("POST", url, true);
+		xhr.open("POST", "/input", true);
 		xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-		xhr.onreadystatechange = function () {
-		    if (xhr.readyState === 4 && xhr.status === 200) {
-		        //var json = JSON.parse(xhr.responseText);
-		    }
-		};
-		var postString = "day=" + day + "&time=" + time + "&addRem=" + addremove;
-		xhr.send(postString);
+		xhr.send("day=" + day + "&time=" + time + "&addRem=" + addremove);
 	}
 
 	// Function to append days to HTML from local JSON file
-	loadJSON(function(response) {
-		// Parse JSON string into object
+	loadJSON('alarmtimes.json', function(response) {
 		var times_days = JSON.parse(response);
 		var totalArray = [];
 		var j = 0;
@@ -127,7 +106,6 @@ window.onload = function(){
 		var day = this.parentNode.id;
 		if(confirm("Weet je zeker dat je de tijd wil verwijderen?")){
 			writeDay(day, time, false);
-			this.style.display = "none";
 			location.reload();
 		}
 		else{
@@ -141,17 +119,15 @@ window.onload = function(){
 		child.className = " trash-solid icon";
 	}
 
-	// Make trashcan invisible with class
+	// Make trashcan invisible with remove class
 	function delClassTrashcan(){
 		var child = this.childNodes[1];
 		child.classList.remove("trash-solid");
 		child.classList.remove("icon");
 	}
 
-	// Make input for SSID and password visible when clicking on wifi settings
-	document.getElementById("wifi").onclick = function(){
-	    var x = document.getElementById("wifisettings");
-	    console.log(x.style.display);
+	function settingsVisible(){
+	    var x = document.getElementById("settings");
 		if (x.style.display === "none" || x.style.display === "") {
 	    	x.style.display = "block";
 	    }
@@ -160,12 +136,15 @@ window.onload = function(){
 	    }
 	}
 
+	// Make settings visible when clicking on settings
+	document.getElementById("settingsButton").onclick = function (){settingsVisible()};
+
 	// Action to save WiFi settings to server
 	document.getElementById("savewifi").onclick = function(){
-		var x = document.getElementById("wifisettings");
+		// /var x = document.getElementById("settings");
 		var ssid = document.getElementById("ssid").value;
 		var password = document.getElementById("password").value;
-		x.style.display = "none";
+		settingsVisible();
 		var xhr = new XMLHttpRequest();
 		var url = "/input";
 		xhr.open("POST", url, true);
@@ -175,7 +154,7 @@ window.onload = function(){
 	}
 
 	// Get sounds from server
-	loadJSONSounds(function(response) {
+	loadJSON('sounds.json', function(response) {
 		var sounds = JSON.parse(response);
 		var select = document.getElementById("sounds");
 		for(var i = 0; i < sounds["sounds"].length; i++){
@@ -186,8 +165,8 @@ window.onload = function(){
 		}
 	});
 
-	// Save selected sound
-	document.getElementById("saveSound").onclick = function(){
+	// Save selected sound is select list changes
+	document.getElementById("sounds").onchange = function(){
 		var sound = document.getElementById("sounds").value;
 		var xhr = new XMLHttpRequest();
 		var url = "/input";
@@ -195,14 +174,19 @@ window.onload = function(){
 		xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 		var postString = "sound=" + sound;
 		xhr.send(postString);
+		alert("Geluid is opgeslagen!")
 	}
 
 	// Upload sound to server
+	// document.getElementById("soundToUpload").onchange = function(){
+	// 	alert("hello");
+	// }
+
 	document.getElementById("uploadSound").onclick = function(){
 		var soundUpload = document.getElementById("soundToUpload").files[0];
 		var allowToUpload = false;
 		console.log(soundUpload.size)
-		loadJSONSounds(function(response) {
+		loadJSON("sounds.json", function(response) {
 			var soundsOnServer = JSON.parse(response);
 			for(var i = 0; i < soundsOnServer["sounds"].length; i++){
 				// Check if name/file already exists
@@ -225,6 +209,7 @@ window.onload = function(){
 			xhr.open("POST", "/upload", true);
 			xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 			xhr.send("soundFile=" + soundUpload);
+			alert("Bestand is geupload!")
 		}
 	}	
    

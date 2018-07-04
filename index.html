@@ -14,8 +14,8 @@
 					<th class="twenty"></th>
 					<th class="eighty"><h1>Pauzebel Ellage</h1></th>
 					<th class="twenty">
-					<button class="save" id="wifi">WiFi Instellen</button>
-					<table id="wifisettings">
+					<button class="save" id="settingsButton">Instellingen</button>
+					<table id="settings">
 						<tr>
 							<td class="left">SSID</td><br>
 							<td class="right"><input type="text" value="ssid" id="ssid"></td>
@@ -27,12 +27,38 @@
 							
 						</tr>
 						<tr class="center">
-							<td><br><button class="save" type="button" id="savewifi">Opslaan</button></td>
+							<td><br><button class="save" type="button" id="savewifi">Opslaan</button><br><br></td>
 						</tr>
+						<tr>
+							<td class="left">
+
+								Geluid instellen:
+							</td>
+							<td class="left">
+								<select name="sounds" id="sounds"></select>
+							</td>
+						</tr>
+						<tr>
+							<td class="left">
+								Geluid uploaden:
+							</td>
+							<td class="left">
+								<input type="file" id="soundToUpload" accept="audio/*">
+							</td>
+						</tr>
+						<tr>
+							<td class="right">
+								<button class="inputTime save btn btn-info" type="button" id="uploadSound">Uploaden</button>
+							</td>
+						</tr>
+
+
+
 					</table>
 					</th>
 				</tr>
 			</table>
+
 		</div>
 		<div class="table">
 			<div class="col" id="timeInputDiv">
@@ -57,18 +83,7 @@
 
 				<br>
 				<br>
-				<h3>Stel een geluid in</h3>
-				<div id="mainselection">
-					<select name="sounds" id="sounds">	
-					</select>
-				</div>
-				<button class="inputTime save btn btn-info" type="button" id="saveSound">Opslaan</button>
 
-				<br>
-				<br>
-				<h3>Upload een geluid</h3>
-				<input type="file" id="soundToUpload" accept="audio/*"><br>
-				<button class="inputTime save btn btn-info" type="button" id="uploadSound">Uploaden</button>
 			</form>
 			</div>
 		
