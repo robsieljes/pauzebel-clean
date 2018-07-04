@@ -60,7 +60,15 @@ window.onload = function(){
 		var xhr = new XMLHttpRequest();
 		xhr.open("POST", "/input", true);
 		xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-		xhr.send("day=" + day + "&time=" + time + "&addRem=" + addremove);
+		xhr.onreadystatechange = function(){
+			if(xhr.readyState === 4 && xhr.readyState === 200){
+				xhr.send("day=" + day + "&time=" + time + "&addRem=" + addremove);
+				// Geen alert, anders wordt het wel heul irritant
+			}
+			else{
+				alert("Tijd opslaan is mislukt");
+			}
+		}
 	}
 
 	// Function to append days to HTML from local JSON file
@@ -147,7 +155,15 @@ window.onload = function(){
 		var xhr = new XMLHttpRequest();
 		xhr.open("POST", "/input", true);
 		xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-		xhr.send("ssid=" + ssid + "&pass=" + password);
+		xhr.onreadystatechange = function(){
+			if(xhr.readyState === 4 && xhr.readyState === 200){
+				xhr.send("ssid=" + ssid + "&pass=" + password);
+				alert("WiFi instellingen zijn opgeslagen!")
+			}
+			else{
+				alert("WiFi instellingen opslaan is mislukt");
+			}
+		}
 	}
 
 	// Get sounds from server
@@ -169,9 +185,16 @@ window.onload = function(){
 		var url = "/input";
 		xhr.open("POST", url, true);
 		xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-		var postString = "sound=" + sound;
-		xhr.send(postString);
-		alert("Geluid is opgeslagen!")
+		xhr.onreadystatechange = function(){
+			if(xhr.readyState === 4 && xhr.readyState === 200){
+				xhr.send("sound=" + sound);
+				alert("Geluid is opgeslagen!")
+			}
+			else{
+				alert("Geluid opslaan is mislukt");
+			}
+		}
+
 	}
 
 	// Upload sound to server
@@ -181,32 +204,45 @@ window.onload = function(){
 
 	document.getElementById("uploadSound").onclick = function(){
 		var soundUpload = document.getElementById("soundToUpload").files[0];
-		var allowToUpload = false;
-		console.log(soundUpload.size)
+		var allowToUpload = true;
+		console.log(soundUpload.type)
 		loadJSON("sounds.json", function(response) {
 			var soundsOnServer = JSON.parse(response);
 			for(var i = 0; i < soundsOnServer["sounds"].length; i++){
 				// Check if name/file already exists
 				if(soundUpload.name == soundsOnServer["sounds"][i]){
 					alert("Bestandsnaam bestaat al");
-					allowToUpload = true;
+					allowToUpload = false;
 					break;
 				}
 				// Check size of upload in bytes
 				else if(soundUpload.size >= 10000000){
 					alert("Bestand is te groot");
-					allowToUpload = true;
+					allowToUpload = false;
+					break;
+				}
+				// Check if uploaded file is .wav type
+				else if (soundUpload.type !== "audio/wav"){
+					alert("Bestand is van het verkeerde type, kies een bestand dat eindigt op .wav");
+					allowToUpload = false;
 					break;
 				}
 			}
 		});
-		if(!allowToUpload){
+		if(allowToUpload){
 			alert('File is allowed to upload');
 			var xhr = new XMLHttpRequest();
 			xhr.open("POST", "/upload", true);
 			xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-			xhr.send("soundFile=" + soundUpload);
-			alert("Bestand is geupload!")
+			xhr.onreadystatechange = function(){
+				if(xhr.readyState === 4 && xhr.readyState === 200){
+					xhr.send("soundFile=" + soundUpload);
+					alert("Bestand is geupload!");
+				}
+				else{
+					alert("Bestand uploaden is mislukt");
+				}
+			}
 		}
 	}	
    
