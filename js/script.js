@@ -8,11 +8,11 @@ window.onload = function(){
 	    xobj.overrideMimeType("application/json");
 		xobj.open('GET', url, false);
 		xobj.onreadystatechange = function () {
-	      if (xobj.readyState == 4 && xobj.status == "200") {
-	     	callback(xobj.responseText);
-	      }
+		     if (xobj.readyState == 4 && xobj.status == "200") {
+	 	    	callback(xobj.responseText);
+	 	     }
 		};
-	xobj.send(null);  
+		xobj.send(null);  
 	}
 
 	// Function to click on save and check if time and days are not empty
@@ -45,14 +45,14 @@ window.onload = function(){
 	document.getElementById("checkFalse").onclick = function(){checkAll("timeForm", false)};
 	
 	function checkAll(formname, checktoggle){
-	  var checkboxes = new Array(); 
-	  checkboxes = document[formname].getElementsByTagName('input');
+		var checkboxes = new Array(); 
+		checkboxes = document[formname].getElementsByTagName('input');
 	 
-	  for (var i=0; i<checkboxes.length; i++) {
-	    if (checkboxes[i].type == 'checkbox') {
-	      checkboxes[i].checked = checktoggle;
-	    }
-	  }
+		for (var i=0; i<checkboxes.length; i++) {
+	  		if (checkboxes[i].type == 'checkbox') {
+	    		checkboxes[i].checked = checktoggle;
+			}
+		}
 	}
 
 	// Function to write data to database
@@ -64,7 +64,7 @@ window.onload = function(){
 	}
 
 	// Function to append days to HTML from local JSON file
-	loadJSON('alarmtimes.json', function(response) {
+	loadJSON('alarmTimes.json', function(response) {
 		var times_days = JSON.parse(response);
 		var totalArray = [];
 		var j = 0;
@@ -141,16 +141,13 @@ window.onload = function(){
 
 	// Action to save WiFi settings to server
 	document.getElementById("savewifi").onclick = function(){
-		// /var x = document.getElementById("settings");
 		var ssid = document.getElementById("ssid").value;
 		var password = document.getElementById("password").value;
 		settingsVisible();
 		var xhr = new XMLHttpRequest();
-		var url = "/input";
-		xhr.open("POST", url, true);
+		xhr.open("POST", "/input", true);
 		xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-		var postString = "ssid=" + ssid + "&pass=" + password;
-		xhr.send(postString);
+		xhr.send("ssid=" + ssid + "&pass=" + password);
 	}
 
 	// Get sounds from server
