@@ -4,6 +4,7 @@
 	<meta charset="UTF-8">
 	<title>Pauzebel Ellage</title>
 	<link rel="stylesheet" href="css/style.css">
+	<link rel="shortcut icon" href="favicon.png" />
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
@@ -11,50 +12,49 @@
 		<div class="header">
 			<table class="headertable">
 				<tr>
-					<th class="twenty"></th>
+					<th class="twenty">
+						<button class="save" id="testSound">Test geluid</button>
+					</th>
 					<th class="eighty"><h1>Pauzebel Ellage</h1></th>
 					<th class="twenty">
-					<button class="save" id="settingsButton">Instellingen</button>
-					<table id="settings">
-						<tr>
-							<td class="left">SSID</td><br>
-							<td class="right"><input type="text" value="ssid" id="ssid"></td>
-							
-						</tr>
-						<tr>
-							<td class="left">Wachtwoord</td><br>
-							<td class="right"><input type="text" value="password" id="password"></td>
-							
-						</tr>
-						<tr class="center">
-							<td><br><button class="save" type="button" id="savewifi">Opslaan</button><br><br></td>
-						</tr>
-						<tr>
-							<td class="left">
+						<button class="save" id="settingsButton">Instellingen</button>
+						<table id="settings">
+							<tr>
+								<td class="left">SSID</td><br>
+								<td class="right"><input type="text" value="ssid" id="ssid"></td>
+								
+							</tr>
+							<tr>
+								<td class="left">Wachtwoord</td><br>
+								<td class="right"><input type="text" value="password" id="password"></td>
+								
+							</tr>
+							<tr class="center">
+								<td><br><button class="save" type="button" id="savewifi">Opslaan</button><br><br></td>
+							</tr>
+							<tr>
+								<td class="left">
 
-								Geluid instellen:
-							</td>
-							<td class="left">
-								<select name="sounds" id="sounds"></select>
-							</td>
-						</tr>
-						<tr>
-							<td class="left">
-								Geluid uploaden:
-							</td>
-							<td class="left">
-								<input type="file" id="soundToUpload" accept="audio/*">
-							</td>
-						</tr>
-						<tr>
-							<td class="right">
-								<button class="inputTime save btn btn-info" type="button" id="uploadSound">Uploaden</button>
-							</td>
-						</tr>
-
-
-
-					</table>
+									Geluid instellen:
+								</td>
+								<td class="left">
+									<select name="sounds" id="sounds"></select>
+								</td>
+							</tr>
+							<tr>
+								<td class="left">
+									Geluid uploaden:
+								</td>
+								<td class="left">
+									<input type="file" id="soundToUpload" accept="audio/*">
+								</td>
+							</tr>
+							<tr>
+								<td class="right">
+									<button class="inputTime save btn btn-info" type="button" id="uploadSound">Uploaden</button>
+								</td>
+							</tr>
+						</table>
 					</th>
 				</tr>
 			</table>

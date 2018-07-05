@@ -34,8 +34,11 @@ html{
 
 .twenty{
 	width: 19%;
-	padding-top: 22px;
+	padding-top: 10px;
+}
 
+#settingsButton{
+	margin-top:15px;
 }
 
 .center{
@@ -85,8 +88,8 @@ button:hover{
 
 button.save{
 	padding:5px 25px 5px 25px;
-	margin-right: 10px;
-	margin-bottom: 10px;
+/*	margin-right: 10px;
+	margin-bottom: 10px;*/
 	font-size: 1.1em;
 	background-color: #17A2B8;
 	color: white;
