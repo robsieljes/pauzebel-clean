@@ -182,8 +182,7 @@ window.onload = function(){
 	document.getElementById("sounds").onchange = function(){
 		var sound = document.getElementById("sounds").value;
 		var xhr = new XMLHttpRequest();
-		var url = "/input";
-		xhr.open("POST", url, true);
+		xhr.open("POST", "/input", true);
 		xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 		xhr.onreadystatechange = function(){
 			if(xhr.readyState === 4 && xhr.readyState === 200){
@@ -194,14 +193,25 @@ window.onload = function(){
 				alert("Geluid opslaan is mislukt");
 			}
 		}
-
 	}
 
-	// Upload sound to server
-	// document.getElementById("soundToUpload").onchange = function(){
-	// 	alert("hello");
-	// }
+	// Test the sound when click on testSound button
+	document.getElementById("testSound").onclick = function(){
+		var xhr = new XMLHttpRequest();
+		xhr.open("POST", "/playsound", true);
+		xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+		xhr.onreadystatechange = function(){
+			if(xhr.readyState === 4 && xhr.readyState === 200){
+				xhr.send();
+			}
+			else{
+				alert("Kan geluid niet testen");
+			}
+		}
+	}
 
+
+	// Upload sound to server
 	document.getElementById("uploadSound").onclick = function(){
 		var soundUpload = document.getElementById("soundToUpload").files[0];
 		var allowToUpload = true;
