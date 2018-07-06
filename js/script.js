@@ -134,24 +134,29 @@ window.onload = function(){
 		child.classList.remove("icon");
 	}
 
+	// Make settings visible and invisible when clicking on and off
+	var settingsElem = document.getElementById("settings");
 	function settingsVisible(){
-	    var x = document.getElementById("settings");
-		if (x.style.display === "none" || x.style.display === "") {
-	    	x.style.display = "block";
-	    }
-	    else {
-	        x.style.display = "none";
-	    }
+	    settingsElem.style.display = "block";
+	}
+	function settingsInvisible(){
+		settingsElem.style.display = "none";
 	}
 
 	// Make settings visible when clicking on settings
 	document.getElementById("settingsButton").onclick = function (){settingsVisible()};
+	document.getElementById("close").onclick = function (){settingsInvisible()};
+	document.addEventListener("click", function(event) {
+		if(event.target.closest("#settings")) {
+			return;
+		}
+		settingsInvisible();
+	}, true);
 
 	// Action to save WiFi settings to server
 	document.getElementById("savewifi").onclick = function(){
 		var ssid = document.getElementById("ssid").value;
 		var password = document.getElementById("password").value;
-		settingsVisible();
 		var xhr = new XMLHttpRequest();
 		xhr.open("POST", "/input", true);
 		xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
@@ -159,6 +164,7 @@ window.onload = function(){
 			if(xhr.readyState === 4 && xhr.readyState === 200){
 				xhr.send("ssid=" + ssid + "&pass=" + password);
 				alert("WiFi instellingen zijn opgeslagen!")
+				settingsInvisible();
 			}
 			else{
 				alert("WiFi instellingen opslaan is mislukt");

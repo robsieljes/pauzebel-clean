@@ -180,6 +180,14 @@ h5{
 	margin-top: 20px;
 }
 
+td.cross{
+	text-align: right;
+	padding-bottom: 10px;
+}
+td.cross:hover{
+	cursor: pointer;
+}
+
 @media screen and (max-width:50em) {
 	.col{
 		display: block;
